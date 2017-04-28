@@ -6,7 +6,7 @@ $(function(){
     $('#data').delegate('.card-open', 'click', openCard); // Open item in the 'data' block
     $('#data').delegate('.card-close', 'click', closeCard); // Close item in the 'data' block
     $('#data').delegate('.set-form', 'click', getSetForm); // Create a form for adding new equipment
-    $('#data').delegate('.del', 'click', del); // Remove equipment by ID
+    $('#data').delegate('.del', 'click', getDelForm); // Create a form for remove equipment
     $('#data').delegate('.edit', 'click', getEditForm); // Create a form for edit equipment
     $('#data').delegate('.cancel', 'click', cancelForm); // Delete 'set' or 'edit' form
 });
@@ -58,7 +58,7 @@ function addBlock(data, link, id) { // From the obtained data compose the block 
 	var block = "";
 
 	data.map((item) => {
-		var str = "<tr><td>" + item.name + "</td><td>" + item.count + "</td><td><a class='edit icon' key='"+linkId+","+item.name+","+item.count+","+roomId+"' id='"+item._id+"'><i class='fa fa-pencil'></i></a><a class='del icon' key='"+linkId+"' id='"+item._id+"'><i class='fa fa-trash'></i></a></td>";
+		var str = "<tr><td>" + item.name + "</td><td>" + item.count + "</td><td><a class='edit icon' key='"+linkId+","+item.name+","+item.count+","+roomId+"' id='"+item._id+"'><i class='fa fa-pencil'></i></a><a class='del icon' key='"+linkId+","+roomId+"' id='"+item._id+"'><i class='fa fa-trash'></i></a></td>";
 		block = block + str;
 	})
 
@@ -81,10 +81,18 @@ function set() { // Send a POST request to create new equipment
 	});
 };
 
+function getDelForm() {
+	var id = $(this).attr('id');
+	var data = $(this).attr('key').split(',');
+	var link = data[0];
+	var room = data[1];
+	$(this).parent().parent().parent().parent().parent().next().html('<form key = "'+link+'" id="'+id+'" class="form-edit" method="post" action="javascript:void(null);" onsubmit="del()"><div style="width: 60%; margin-left: 10px; display: inline-block;"><b>Are you sure?</b></div><input style="width: 15%" class="button is-primary" type="submit" value="Yes"><button key="'+room+'" id="'+link+'" style="width: 15%" class="cancel button is-danger">Cancel</button></form>');
+}
+
 function del() { // Send a POST request to remove equipment by ID
-	var link = $(this).attr('key');
-	var key = $(this).attr('id');
-	$.post('/delete', {'id': key}, function(data) {
+	var link = $('.form-edit:first').attr('key');
+	var id = $('.form-edit:first').attr('id');
+	$.post('/delete', {'id': id}, function(data) {
 		if (data) { $('#'+link)[0].click(); } // Update 'data' block
 	});
 };
