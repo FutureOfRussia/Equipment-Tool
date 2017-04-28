@@ -54,10 +54,12 @@ block content
         p
           strong Equipment Tools 
           text by 
-          a(href='https//vk.com/kroschkaenot') Nikita Zalygin
+          - var vk = 'https://vk.com/kroschkaenot'
+          a(target="_blank" href=vk) Nikita Zalygin
           text .
         p
-          a(class='icon' href='https//github.com/FutureOfRussia')
+          - var github = 'https://github.com/FutureOfRussia'
+          a(class='icon' target="_blank" href=github)
             i(class='fa fa-github')
 
   - function getRoomId(obj) {
