@@ -1,0 +1,47 @@
+.acc-body {
+	display: none;
+}
+
+.opBtn {
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 21px;
+	cursor: pointer;
+}
+
+.link {
+	display: inline-block;
+	width: 80%;
+}
+
+.nav {
+	margin-bottom: 15px;
+	background-color: hsl(171, 100%, 41%);
+}
+
+.cont {
+	min-height: 430px;
+}
+
+.footer {
+	padding: 1em 1.5em 1em;
+}
+
+a.nav-item.is-brand {
+	padding-left: 0.75em;
+	font-weight: 600;
+	font-size: 1.4rem;
+	color: hsl(0, 0%, 100%);
+}
+
+.icon .fa {
+	font-size: 26px;
+}
+
+a.icon .fa {
+	font-size: 21px;
+}
+
+.card-header {
+	background-color: hsl(0, 0%, 86%);
+}

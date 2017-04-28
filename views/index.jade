@@ -1,0 +1,93 @@
+extends layout
+
+block content  
+  div(class='container')
+    nav(class='nav has-shadow')
+        div(class='nav-left')
+          a(class="nav-item is-brand") Equipment Tools
+    div(class='columns is-desktop')
+      div(class='column is-5' style="margin-top: 10px;")
+        aside(class='menu')
+          ul(class='menu-list')
+            each item, i in data
+              li
+                div(class='opBtn')
+                  i(class='acc-open fa fa-expand' aria-hidden='true')
+                  i(class='acc-close fa fa-compress' aria-hidden='true' style='display: none;')
+                div(class='link')
+                  a(href='#' id= item._id key=(getRoomId(item)))= item.name
+                ul(class="acc-body")
+                  each room, i in item.rooms
+                    li
+                      if room.children
+                        div(class='opBtn')
+                          i(class='acc-open fa fa-expand' aria-hidden='true')
+                          i(class='acc-close fa fa-compress' aria-hidden='true' style='display: none;')
+                      div(class='link')
+                        a(href='#' id= room.id key=(room.children ? getRoomId(room) : room.id))= room.name
+                      if room.children
+                        ul(class="acc-body")
+                          each child, i in room.children
+                            li
+                              if child.children
+                                div(class='opBtn')
+                                  i(class='acc-open fa fa-expand' aria-hidden='true')
+                                  i(class='acc-close fa fa-compress' aria-hidden='true' style='display: none;')
+                              div(class='link')
+                                a(href='#' id= child.id key=(child.children ? getRoomId(child) : child.id))= child.name
+                              if child.children
+                                ul(class="acc-body")
+                                  each secondchild, i in child.children
+                                    li
+                                      div(class='link')
+                                        a(href='#' id= secondchild.id key= secondchild.id)= secondchild.name
+      div(class='column cont')
+        div(class='tile is-ansector')
+          div(class='tile is-vertical is-parent' id='data')
+            div(class='notification is-primary' style="text-align: center;")
+              h1(class='title is-1') Welcome to the Equipment Tools!
+              br
+              p(class='subtitle is-4') This application works with a hierarchy of buildings and equipment that is contained in the premises.
+              p(class='subtitle is-3') To start working, select the building or room in it and click on it.
+    footer(class='footer')
+      div(class='content has-text-centered')
+        p
+          strong Equipment Tools 
+          text by 
+          a(href='https//vk.com/kroschkaenot') Nikita Zalygin
+          text .
+        p
+          a(class='icon' href='https//github.com/FutureOfRussia')
+            i(class='fa fa-github')
+
+  - function getRoomId(obj) {
+  -   var arr = [];
+  -   if (obj.rooms) {
+  -     obj.rooms.map((room) => {
+  -       if (room.children) {
+  -         room.children.map((child) => {
+  -           if (child.children) {
+  -             child.children.map((ender) => {
+  -               arr.push(ender.id);
+  -             })
+  -           } else {
+  -             arr.push(child.id);
+  -           }
+  -         })
+  -       } else {
+  -         arr.push(room.id);
+  -       }
+  -     })
+  -   } else {
+  -     obj.children.map((child) => {
+  -       if (child.children) {
+  -         child.children.map((ender) => {
+  -           arr.push(ender.id); 
+  -         })
+  -       } else {
+  -         arr.push(child.id);
+  -       }
+  -     })
+  -   }
+  -   return arr;
+  - }
