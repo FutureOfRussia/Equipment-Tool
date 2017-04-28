@@ -70,7 +70,7 @@ function addBlock(data, link, id) { // From the obtained data compose the block 
 function getSetForm() { // Create a form for adding new equipment
 	var room = $(this).attr('id');
 	var link = $(this).attr('key');
-	$(this).parent().parent().html('<form key = "'+link+'" class="form-set" method="post" action="javascript:void(null);" onsubmit="set()"><input style="width: 50%;" class="input" type="text" name="name" value="New equipment"><input style="width: 20%;" class="input" type="number" name="count" value="1"><input type="hidden" name="room" value="'+room+'"><input style="width: 15%;" class="button is-primary" type="submit" value="Add"><button key="'+room+'" id="'+link+'" style="width: 15%" class="cancel button is-danger">Cancel</button></form>');
+	$(this).parent().parent().html('<form key = "'+link+'" class="form-set" method="post" action="javascript:void(null);" onsubmit="set()"><input required style="width: 50%;" class="input" type="text" name="name" value="New equipment"><input required style="width: 20%;" class="input" type="number" min="1" name="count" value="1"><input type="hidden" name="room" value="'+room+'"><input style="width: 15%;" class="button is-primary" type="submit" value="Add"><button key="'+room+'" id="'+link+'" style="width: 15%" class="cancel button is-danger">Cancel</button></form>');
 };
 
 function set() { // Send a POST request to create new equipment
@@ -96,7 +96,7 @@ function getEditForm() { // Create a form for edit equipment
 	var name = data[1];
 	var count = data[2];
 	var room = data[3];
-	$(this).parent().parent().parent().parent().parent().next().html('<form key = "'+link+'" class="form-edit" method="post" action="javascript:void(null);" onsubmit="edit()"><input style="width: 50%" class="input" type="text" name="name" value="'+name+'"><input style="width: 20%" class="input" type="number" name="count" value="'+count+'"><input type="hidden" name="id" value="'+id+'"><input style="width: 15%" class="button is-primary" type="submit" value="Save"><button key="'+room+'" id="'+link+'" style="width: 15%" class="cancel button is-danger">Cancel</button></form>');
+	$(this).parent().parent().parent().parent().parent().next().html('<form key = "'+link+'" class="form-edit" method="post" action="javascript:void(null);" onsubmit="edit()"><input required style="width: 50%" class="input" type="text" name="name" value="'+name+'"><input required style="width: 20%" class="input" type="number" min="1" name="count" value="'+count+'"><input type="hidden" name="id" value="'+id+'"><input style="width: 15%" class="button is-primary" type="submit" value="Save"><button key="'+room+'" id="'+link+'" style="width: 15%" class="cancel button is-danger">Cancel</button></form>');
 };
 
 function edit() { // Send a POST request to edit equipment
@@ -112,4 +112,3 @@ function edit() { // Send a POST request to edit equipment
  	var linkId = $(this).attr('id');
  	$(this).parent().parent().html("<footer class='card-footer'><a id='"+roomId+"' key='"+linkId+"' class='set-form card-footer-item'><span class='icon'><i class='fa fa-plus'></i></span></a></footer>")
  }
- 
